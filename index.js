@@ -6,7 +6,7 @@ var rp = require("request-promise");
 const favicon = require("express-favicon");
 var path = require("path");
 
-app.use(favicon(path.join(__dirname, 'favicon.png')));
+app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 app.use(express.static(__dirname));
 
