@@ -1,7 +1,6 @@
 $(document).ready(function(event) {
   //MAINVIEW = "HAVERFORD";
   createScrollStop();
-  setClocks();
   setView();
   updateClocksCSS();
 
@@ -45,7 +44,7 @@ $(document).ready(function(event) {
 
   // Handles clock animations during scrolling
   $(window).scroll(function() {
-    updateClocksCSS();
+      //updateClocksCSS();
     // if ($(document).scrollLeft() != 0) {
     //   $(document).scrollLeft(0);
     // }

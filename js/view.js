@@ -1,9 +1,12 @@
 
 function setView(){
-  updateClock();
-  if (MAINVIEW == 'HAVERFORD') {
-    $('#currentViewHeader').text('Haverford');
-    $('#currentViewDesc').text('Going to Bryn Mawr');
+    $("#main-clock").html("<a href=\"http://bluebus.sites.haverford.edu\" style=\"text-decoration:none;color:white\">bluebus.sites.haverford.edu</a>");
+    //$("#main-clock-desc").html("Bus leaves in:");
+    //$("#small-clock").html("See you there");
+    //$("#small-clock-desc").html(bus.toDateFormat(dates[1], false) + " bus leaves in:");
+
+    $('#currentViewHeader').text('Bluebus Page');
+    $('#currentViewDesc').text('Has Moved To');
 
     $('#currentViewHeader').removeClass('bmc-header');
     $('#currentViewHeader').addClass('hc-header');
@@ -12,27 +15,4 @@ function setView(){
 
     $('.time').css({'background': '#A60000'});
     $('.small-clock').css({'background': '#A60000'});
-
-    $('#BrynMawrButton').css({'transform':'', 'opacity':''})
-    $('#HaverfordButton').css({'transform':'scale(1)', 'opacity':'1'})
-
-    //$('html').css({'overflow': 'hidden'});
-  }
-  else {
-    $('#currentViewHeader').text('Bryn Mawr');
-    $('#currentViewDesc').text('Going to Haverford');
-
-    $('#currentViewHeader').removeClass('hc-header');
-    $('#currentViewHeader').addClass('bmc-header');
-    $('#currentViewDesc').removeClass('hc-desc');
-    $('#currentViewDesc').addClass('bmc-desc');
-
-    $('.time').css({'background': '#03335F'});
-    $('.small-clock').css({'background': '#03335F'});
-
-    $('#HaverfordButton').css({'transform':'', 'opacity':''})
-    $('#BrynMawrButton').css({'transform':'scale(1)', 'opacity':'1'})
-
-    //$('html').css({'overflow': 'auto'});
-  }
 }

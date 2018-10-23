@@ -92,4 +92,4 @@ var formatCountdown = function(distance) {
 }
 
 
-setInterval(updateClock, 1000);
+//setInterval(updateClock, 1000);
