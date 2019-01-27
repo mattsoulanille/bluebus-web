@@ -18,7 +18,7 @@ var updateClock = function() {
     var nextBuses = bus.getNextBuses("Haverford",2 + NUM_CLOCKS);
   }
   else {
-    var nextBuses = bus.getNextBuses("BrynMawr",2 + NUM_CLOCKS);
+    var nextBuses = bus.getNextBuses("Bryn Mawr",2 + NUM_CLOCKS);
   }
 
   var distance1;

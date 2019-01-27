@@ -51,7 +51,7 @@ async function getBusData(url) {
 
     var departures = {};
     for (let i in departureSets) {
-        departures[i] = [...departureSets[i]].sort();
+        departures[i] = [...departureSets[i]].sort((a, b) => a - b);
     }
 
     return departures;

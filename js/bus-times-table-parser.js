@@ -5,7 +5,7 @@ class nextBusTime {
 		this.busTimesInSeconds = null;
 	}
 
-	//Converts seconds relative to Monday at midnight into date format
+	//Converts seconds relative to Sunday at midnight into date format
 	toDateFormat(num_seconds, includeDay){
 		//Calculate equivalent Day, Hour, and Minute based on Seconds
 		var secondsInMinute = 60;
@@ -20,13 +20,13 @@ class nextBusTime {
 		var minute = Math.floor(num_seconds/secondsInMinute);
 		var dayAsString = "";
 		switch(day){
-			case 0: dayAsString = "Mon";
-			case 1: dayAsString = "Tue";
-			case 2: dayAsString = "Wed";
-			case 3: dayAsString = "Thu";
-			case 4: dayAsString = "Fri";
-			case 5: dayAsString = "Sat";
-			case 6: dayAsString = "Sun";
+			case 0: dayAsString = "Sun";
+			case 1: dayAsString = "Mon";
+			case 2: dayAsString = "Tue";
+			case 3: dayAsString = "Wed";
+			case 4: dayAsString = "Thu";
+			case 5: dayAsString = "Fri";
+			case 6: dayAsString = "Sat";
 		}
 		//Convert to non-military time
 		var AmPm = "AM";
@@ -53,16 +53,16 @@ class nextBusTime {
 			await this.getBusTimeInSeconds();
 		}
 		var times = this.busTimesInSeconds[school];
-		//calculate number of seconds since Monday 12 am to compare to array
+		//calculate number of seconds since Sunday 12 am to compare to array
 		var now = new Date();
 		var day = now.getDay();
-		day = ((day-1)+7)%7;
+
 		var hours = now.getHours();
 		var minutes = now.getMinutes();
 		var seconds = now.getSeconds();
 		var totalSeconds = day*(24*60*60) + hours*(60*60) + minutes*60 + seconds;
 		//brute force search for the next time
-		//Want the first one whose time in seconds since Monday 12 am is greater than current one
+		//Want the first one whose time in seconds since Sunday 12 am is greater than current one
 		//Since otherwise the bus has already left
 		for(var i = 0; i < times.length;i++){
 			if(times[i]>totalSeconds){
