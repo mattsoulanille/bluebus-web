@@ -16,7 +16,6 @@ getBusData("http://www.brynmawr.edu/transportation/bico.shtml");
 
 app.get("/busdata.json", async function(req, res) {
     var data = await getBusData("http://www.brynmawr.edu/transportation/bico.shtml");
-    console.log(data);
     res.send(data);
     
 });
