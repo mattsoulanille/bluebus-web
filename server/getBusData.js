@@ -100,34 +100,43 @@ function getTableDay(table) {
 
         // For each entry in the column
         for (let i in col) {
-            let entryString = col[i].toLowerCase();
-
-            // For each possible day
-            for (let d in days) {
-                let strings = days[d];
-
-                // For each string corresponding to the day
-                for (let s in strings) {
-                    let dayString = strings[s].toLowerCase();
-                    // Check if the entry in the column
-                    // contains the string of the day
-                    if (entryString.includes(dayString)) {
-                        return d;
-                    }
-                }
+            let entryString = col[i];
+            let day = getDay(entryString);
+            if (day) {
+                return day;
+            }
+            else {
+                throw new NoDayFoundError();
             }
         }
     }
-    throw new NoDayFoundError();
 }
+
+function getDay(str) {
+    // For each possible day
+    for (let d in days) {
+        let strings = days[d];
+
+        // For each string corresponding to the day
+        for (let s in strings) {
+            let dayString = strings[s].toLowerCase();
+            // Check if the entry in the column
+            // contains the string of the day
+            if (str.toLowerCase().includes(dayString)) {
+                return d;
+            }
+        }
+    }
+    return null;
+};
 
 function getTimes(col) {
     // Returns a list of time in seconds since the start of the day
     // Match pm, p.m, pm., p.m.
-    const pm = /p\.?m\.?/;
+    const pm = /[p|P]\.?[m|M]\.?/;
 
     // Match am, a.m, am., a.m.
-    const am = /a\.?m\.?/;
+    const am = /[a|A]\.?[m|M]\.?/;
 
     const timeRegex = /\s*(\d\d?)(:(\d\d))?\s*/;
     const andRegex = /and/;
@@ -138,8 +147,12 @@ function getTimes(col) {
     // Becomes 2 when going from pm to am
     var timeOffset = 0;
 
+    var lastTime = null;
     for (let i in col) {
         var str = col[i];
+        if (getDay(str)) {
+            continue; // Don't parse if it contains the string for a day.
+        }
 
         if (pm.test(str)) {
             timeOffset = 1;
@@ -158,16 +171,18 @@ function getTimes(col) {
             let timeString = splitOverAnd[j];
             let matches = timeString.match(timeRegex);
             if (matches) {
-                let hour = matches[1] | 0;
+                let hour = (matches[1] | 0) % 12; // 12:30 pm is actually 0:30 pm
                 let minute = matches[3] | 0;
                 let timeInSeconds =
                     3600 * hour +
                     60 * minute +
                     3600 * 12 * timeOffset;
-
+                if (lastTime > timeInSeconds) {
+                    console.warn("Last Time was after current time for " + str);
+                }
+                lastTime = timeInSeconds;
                 timesToReturn.add(timeInSeconds);
             }
-
         }
     }
     return timesToReturn;
