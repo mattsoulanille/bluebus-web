@@ -7,24 +7,28 @@ var app;
 
 // https://stackoverflow.com/questions/19046208/forwarding-http-to-https-in-node-js-express-app-using-ebs-elb-environment/19051185#19051185
 function ensureSecure(req, res, next) {
-    if (req.secure) {
-        // OK, continue
+    if (req.header == "https") {
+        // I know you should just check "req.secure()" but this is
+        // sitting behind a https -> http proxy
         return next();
     };
     res.redirect('https://' + req.hostname + req.url); // handle port numbers if non 443
 };
 
 
+
 var port;
 if (process.env.NODE_ENV == "Production") {
-    // Use HTTPS
-    port = 443;
-    var privateKey = fs.readFileSync("keys/privatekey.pem");
-    var certificate = fs.readFileSync("keys/certificate.pem");
-    app = express({
-        key: privateKey,
-        cert: certificate
-    });
+    // // Use HTTPS
+    // port = 443;
+    // var privateKey = fs.readFileSync("keys/privatekey.pem");
+    // var certificate = fs.readFileSync("keys/certificate.pem");
+    // app = express({
+    //     key: privateKey,
+    //     cert: certificate
+    // });
+    port = 80;
+    app = express();
     app.all('*', ensureSecure);
 }
 else {
@@ -42,9 +46,7 @@ const getBusData = require("./server/getBusData.js");
 app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 
-
 app.use(express.static(path.join(__dirname, "static")));
-
 
 
 // Temporary
