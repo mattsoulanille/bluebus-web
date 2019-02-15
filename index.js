@@ -4,7 +4,7 @@ var express = require('express');
 var app;
 
 
-
+/*
 // https://stackoverflow.com/questions/19046208/forwarding-http-to-https-in-node-js-express-app-using-ebs-elb-environment/19051185#19051185
 function ensureSecure(req, res, next) {
     if (req.header == "https") {
@@ -14,9 +14,9 @@ function ensureSecure(req, res, next) {
     };
     res.redirect('https://' + req.hostname + req.url); // handle port numbers if non 443
 };
+*/
 
-
-
+/*
 var port;
 if (process.env.NODE_ENV == "Production") {
     // // Use HTTPS
@@ -36,7 +36,10 @@ else {
     port = 80;
     app = express();
 }
+*/
 
+var port = 80;
+app = express();
 
 var rp = require("request-promise");
 const favicon = require("express-favicon");
