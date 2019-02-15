@@ -1,12 +1,13 @@
-var port = 80;
+
 var express = require('express');
 var app = express();
 
 
 
-var server;
+var server, port;
 if (process.env.NODE_ENV == "Production") {
-    // Use HTTPS
+	// Use HTTPS
+	port = 443;
     var privateKey = fs.readFileSync("keys/privatekey.pem");
     var certificate = fs.readFileSync("keys/certificate.pem");
     server = require('https').createServer({
@@ -15,7 +16,8 @@ if (process.env.NODE_ENV == "Production") {
     });
 }
 else {
-    // Use HTTP
+	// Use HTTP
+	port = 80;
     server = require('http').Server(app);
 }
 
