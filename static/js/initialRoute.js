@@ -25,6 +25,8 @@ async function initialRoute() {
 
     var location = [locationObject.coords.latitude, locationObject.coords.longitude];
 
+	window.onfocus = updateView;
+
     if (distance(location, brynmawrCenter) < maxDist) {
         return "BRYNMAWR";
     }
@@ -41,5 +43,5 @@ function updateView() {
     });
 }
 
-window.onfocus = updateView;
+
 updateView();
