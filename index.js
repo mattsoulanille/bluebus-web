@@ -1,24 +1,36 @@
 
 var express = require('express');
-var app = express();
+//var app = express();
+var app;
 
 
 
-var server, port;
+// https://stackoverflow.com/questions/19046208/forwarding-http-to-https-in-node-js-express-app-using-ebs-elb-environment/19051185#19051185
+function ensureSecure(req, res, next) {
+    if (req.secure) {
+        // OK, continue
+        return next();
+    };
+    res.redirect('https://' + req.host + req.url); // handle port numbers if non 443
+};
+
+
+var port;
 if (process.env.NODE_ENV == "Production") {
-	// Use HTTPS
-	port = 443;
+    // Use HTTPS
+    port = 443;
     var privateKey = fs.readFileSync("keys/privatekey.pem");
     var certificate = fs.readFileSync("keys/certificate.pem");
-    server = require('https').createServer({
+    app = express({
         key: privateKey,
         cert: certificate
     });
+    app.all('*', ensureSecure);
 }
 else {
-	// Use HTTP
-	port = 80;
-    server = require('http').Server(app);
+    // Use HTTP
+    port = 80;
+    app = express();
 }
 
 
@@ -46,6 +58,6 @@ app.get("/busdata.json", async function(req, res) {
 
 
 
-server.listen(port, function() {
+app.listen(port, function() {
     console.log('listening on *:' + port);
 });
