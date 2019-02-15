@@ -30,9 +30,6 @@ app.use(favicon(path.join(__dirname, 'favicon.ico')));
 
 
 app.use(express.static(path.join(__dirname, "static")));
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
-});
 
 
 
