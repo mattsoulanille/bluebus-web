@@ -11,7 +11,7 @@ function ensureSecure(req, res, next) {
         // OK, continue
         return next();
     };
-    res.redirect('https://' + req.host + req.url); // handle port numbers if non 443
+    res.redirect('https://' + req.hostname + req.url); // handle port numbers if non 443
 };
 
 
